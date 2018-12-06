@@ -1,0 +1,41 @@
+{%extends "layout.html"%}
+
+{%block header%}
+    <header>
+        <a href="{{url_for('signup')}}">registration</a>
+        <a href="{{url_for('business')}}">business</a>
+    </header>
+{%endblock header%}
+
+{%block content%}
+    <form action="" method="POST">
+        {{form.hidden_tag()}}<br>
+        {{form.email.label}}
+            {%if form.email.errors%}
+                {{form.email}}<br>
+                    <div>
+                        {%for errors in form.email.errors%}
+                            <small>{{errors}}</small>
+                        {%endfor%}
+                    </div>
+            {%else%}
+                {{form.email}}<br>
+            {%endif%}
+        
+        {{form.password.label}}
+        {%if form.password.errors%}
+                {{form.password}}<br>
+                    <div>
+                        {%for errors in form.password.errors%}
+                            <small>{{errors}}</small>
+                        {%endfor%}
+                    </div>
+            {%else%}
+                {{form.password}}<br>
+            {%endif%}
+        
+       
+        {{form.submit}}
+    </form>
+    
+{%endblock content%}

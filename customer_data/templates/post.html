@@ -1,0 +1,22 @@
+{% extends "layout.html"%}
+
+{%block content%}
+    <div>
+        <p>Name: {{content.companyname}}       Code:{{content.companycode}}<br>
+         Location: {{content.companyltn}}<br>
+         Contact:{{content.companyno}}<br>
+         Domain:{{content.companydomain}}<br>
+         Product:{{company.companyproduct}}<br>
+         </p>
+         <p>Comments</p>
+    </div>
+    <hr>
+    
+    {%for companies in post%}
+        <p>
+          {{companies.companyname}}   {{companies.time.strftime('%Y-%m-%d')}}<br>
+           <small> {{companies.content}}</small>
+        </p>  
+        <hr>  
+    {%endfor%}
+{%endblock content%}

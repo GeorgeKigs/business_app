@@ -1,0 +1,81 @@
+{% extends "layout.html"%}
+{%block content%}
+{%if success%}
+<form action="" method="POST">
+    {{form.hidden_tag()}}
+    {{form.companyname.label}}
+    {%if form.companyname.errors%}
+        {{form.companyname}}<br>
+            <div>
+                {%for errors in form.companyname.errors%}
+                    <small>{{errors}}</small>
+                {%endfor%}
+            </div>
+    {%else%}
+        {{form.companyname}}<br>
+    {%endif%}
+    {{form.companydomain.label}}
+    {%if form.companydomain.errors%}
+        {{form.companydomain}}<br>
+            <div>
+                {%for errors in form.companydomain.errors%}
+                    <small>{{errors}}</small>
+                {%endfor%}
+            </div>
+    {%else%}
+        {{form.companydomain}}<br>
+    {%endif%}
+    {{form.companycode.label}}
+        {%if form.companycode.errors%}
+            {{form.companycode}}<br>
+                <div>
+                    {%for errors in form.companycode.errors%}
+                        <small>{{errors}}</small>
+                    {%endfor%}
+                </div>
+        {%else%}
+            {{form.companycode}}<br>
+        {%endif%}
+    {{form.companyno.label}}
+        {%if form.companyno.errors%}
+            {{form.companyno}}<br>
+                <div>
+                    {%for errors in form.companyno.errors%}
+                        <small>{{errors}}</small>
+                    {%endfor%}
+                </div>
+        {%else%}
+            {{form.companyno}}<br>
+        {%endif%}
+        {{form.companyltn.label}}
+        {%if form.companyltn.errors%}
+            {{form.companyltn}}<br>
+                <div>
+                    {%for errors in form.companyltn.errors%}
+                        <small>{{errors}}</small>
+                    {%endfor%}
+                </div>
+        {%else%}
+            {{form.companyltn}}<br>
+        {%endif%}
+        {{form.companyproduct.label}}
+        {%if form.companyproduct.errors%}
+            {{form.companyproduct}}<br>
+                <div>
+                    {%for errors in form.companyproduct.errors%}
+                        <small>{{errors}}</small>
+                    {%endfor%}
+                </div>
+        {%else%}
+            {{form.companyproduct}}<br>
+        {%endif%}
+    {{form.submit}}
+</form>
+
+{%else%}
+        <a href="{{url_for('login')}}">Please Log In.</a>
+{%endif%}
+
+
+
+{%endblock content%}

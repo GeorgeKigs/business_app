@@ -1,0 +1,27 @@
+{%extends "layout.html"%}
+{%block header%}
+    <header>
+        {%if not success%}
+        <a href="{{url_for('signup')}}">registration</a>
+        <a href="{{url_for('login')}}">Log In</a>
+        {%else%}
+        <a href="{{url_for('login')}}">Log out</a>
+        <a href="{{url_for('companyreg')}}">Company Registration</a>
+        {%endif%}
+        <a href="{{url_for('reviews_form')}}">Reviews</a>
+    </header>
+{%endblock header%}
+
+{%block content%}
+    {%if success%}
+        <a align='left' href="{{url_for('deletecom')}}">delete company</a>
+    {%endif%}
+    {%for companies in review%}
+        <p>
+            {{companies.companycode}}  <a href="{{url_for('post', id=companies.id )}}">{{companies.companyname}}</a> <br>
+           <small> {{companies.companyproduct}}</small>
+        </p>  
+        <p>-------------------------------------------</p>  
+    {%endfor%}
+{%endblock content%}
+

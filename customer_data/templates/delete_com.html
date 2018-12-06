@@ -1,0 +1,32 @@
+{%block content%}
+    <form action="" method="POST">
+        {{form.hidden_tag()}}<br>
+        {{form.companycode.label}}
+            {%if form.companycode.errors%}
+                {{form.companycode}}<br>
+                    <div>
+                        {%for errors in form.companycode.errors%}
+                            <small>{{errors}}</small>
+                        {%endfor%}
+                    </div>
+            {%else%}
+                {{form.companycode}}<br>
+            {%endif%}
+        
+        {{form.password.label}}
+        {%if form.password.errors%}
+                {{form.password}}<br>
+                    <div>
+                        {%for errors in form.password.errors%}
+                            <small>{{errors}}</small>
+                        {%endfor%}
+                    </div>
+            {%else%}
+                {{form.password}}<br>
+            {%endif%}
+        
+       
+        {{form.submit}}
+    </form>
+    
+{%endblock content%}

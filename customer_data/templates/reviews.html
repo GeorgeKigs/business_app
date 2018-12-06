@@ -1,0 +1,53 @@
+{%extends 'layout.html'%}
+{%block content%}
+<div>
+    
+    {%for companies in post%}
+        <p>
+            {{companies.companyname}}   {{companies.time.strftime('%Y-%m-%d')}}<br>
+           <small> {{companies.content}}</small>
+        </p>  
+        <p>-------------------------------------------</p>  
+    {%endfor%}
+
+</div>
+<div class="absolute">
+    <form action="" method="POST">
+    {{form.hidden_tag()}}
+    {{form.client.label}}
+    {%if form.client.errors%}
+        {{form.client}}<br>
+            <div>
+                {%for errors in form.client.errors%}
+                    <small>{{errors}}</small>
+                {%endfor%}
+            </div>
+    {%else%}
+        {{form.client}}<br>
+    {%endif%}
+    {{form.companyname.label}}
+    {%if form.companyname.errors%}
+        {{form.companyname}}<br>
+            <div>
+                {%for errors in form.companyname.errors%}
+                    <small>{{errors}}</small>
+                {%endfor%}
+            </div>
+    {%else%}
+        {{form.companyname}}<br>
+    {%endif%}
+    {{form.content.label}}
+    {%if form.content.errors%}
+        {{form.content}}<br>
+            <div>
+                {%for errors in form.content.errors%}
+                    <small>{{errors}}</small>
+                {%endfor%}
+            </div>
+    {%else%}
+        {{form.content}}<br>
+    {%endif%}
+    {{form.submit}}
+    </form>
+</div>
+{%endblock%}
