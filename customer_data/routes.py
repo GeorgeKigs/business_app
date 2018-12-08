@@ -116,23 +116,26 @@ def deletecom():
 @customer_data.route('/business/reviews/',methods=['POST','GET'])
 def reviews_form():
     form=Reviews()
-    post=Reviews_db.query.filter_by(user_id=email_val.id)
-    # if not post:
-    #     flash('no posts available')
-    if form.validate_on_submit():
-        code=Companies.query.filter_by(companyname=form.companyname.data).first()
-        
-        if code:
-           
-            reviews_id=Reviews_db(companyname=form.companyname.data,
-                content=form.content.data,companycode=code.companyid,
-                user_id=code.user_id)
-            db.session.add(reviews_id)
-            db.session.commit()
-            flash('your comment has been posted')
-            return redirect(url_for('business'))
-        else:
-            flash(f'{form.companyname.data} does not exsist')
+    post=False
+    if success:
+        post=Reviews_db.query.filter_by(user_id=email_val.id)
+        # if not post:
+        #     flash('no posts available')
+        if form.validate_on_submit():
+            code=Companies.query.filter_by(companyname=form.companyname.data).first()
+            
+            if code:
+            
+                reviews_id=Reviews_db(companyname=form.companyname.data,
+                    content=form.content.data,companyid=code.id,
+                    user_id=code.user_id)
+                db.session.add(reviews_id)
+                db.session.commit()
+                flash('your comment has been posted')
+                return redirect(url_for('business'))
+            else:
+                flash(f'{form.companyname.data} does not exsist')
+    
     
     return render_template('reviews.html',title='Reviews' ,form=form,post=post)
 

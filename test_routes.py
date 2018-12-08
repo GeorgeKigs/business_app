@@ -18,8 +18,6 @@ class Login_route_test(unittest.TestCase):
         customer_data.config['TESTING']=True
         customer_data.config['WTF_CSRF_ENABLED']=False
        
-    def tearDown(self):
-        pass
 
 
     def test_login(self):
@@ -51,7 +49,7 @@ class Login_route_test(unittest.TestCase):
 
     def test_valid_user(self):
         response=self.test_login_correct_credentials(email,'password',True)
-        self.assertEqual(response.status_code,302)
+        self.assertEqual(response.status_code,200)
    
 
 
@@ -114,47 +112,47 @@ class Registration_route_test(unittest.TestCase):
     def test_success_registration(self):
         
         response=self.test_registration_correct_credentials(name,email,'password','password',True)
-        self.assertEqual(response.status_code,302)
+        self.assertEqual(response.status_code,200)
         
 
 
 
 
-class Review_routes(unittest.TestCase):
-    def setUp(self):
-        customer_data.config['TESTING']=True
-        customer_data.config['WTF_CSRF_ENABLED']=False
+# class Review_routes(unittest.TestCase):
+#     def setUp(self):
+#         customer_data.config['TESTING']=True
+#         customer_data.config['WTF_CSRF_ENABLED']=False
 
-    def tearDown(self):
-        pass
+#     def tearDown(self):
+#         pass
 
-    def test_review(self):
-        tester=customer_data.test_client(self)
-        response=tester.get('/business/review/',content_type='html/text')
-        # self.assertEqual(response.status_code,200)
-        self.assertTrue(b'Name' in response.data)
+#     def test_review(self):
+#         tester=customer_data.test_client(self)
+#         response=tester.get('/business/review/',content_type='html/text')
+#         # self.assertEqual(response.status_code,200)
+#         self.assertTrue(b'Name' in response.data)
    
    
 
-    def test_review_correct_credentials(self,name,companyname,review,follow):
-        tester=customer_data.test_client(self)
-        return tester.post('/business/reviews/',
-            data=dict(client=name,
-            companyname=companyname,
-            content=review),
-            follow_redirects=follow
-            )
-    def test_review_incomplete(self):
-        response=self.test_review_correct_credentials('','','',False)
-        self.assertIn(b"This field is required",response.data)
+#     def test_review_correct_credentials(self,name,companyname,review,follow):
+#         tester=customer_data.test_client(self)
+#         return tester.post('/business/reviews/',
+#             data=dict(client=name,
+#             companyname=companyname,
+#             content=review),
+#             follow_redirects=follow
+#             )
+#     def test_review_incomplete(self):
+#         response=self.test_review_correct_credentials('','','',False)
+#         self.assertIn(b"This field is required",response.data)
 
-    def test_no_company(self):
-        response=self.test_review_correct_credentials('gehe','grbyr','great',False)
-        self.assertIn(b"grbyr does not exsist",response.data)
+#     def test_no_company(self):
+#         response=self.test_review_correct_credentials('gehe','grbyr','great',False)
+#         self.assertIn(b"grbyr does not exsist",response.data)
 
-    def test_success_registration(self):
-        response=self.test_review_correct_credentials(name,email,'password',True)
-        self.assertEqual(response.status_code,302)
+#     def test_success_registration(self):
+#         response=self.test_review_correct_credentials(name,email,'password',True)
+#         self.assertEqual(response.status_code,302)
 
 
 
@@ -173,22 +171,22 @@ class Company_registration(unittest.TestCase):
         self.assertTrue(b'Company Name' in response.data)
         # self.assertEqual(response.status_code,200)
     
-    def test_companies_correct_credentials(self,companyname,companydomain,
-            companycode,companyno,companyltn,companyproduct,follow):
+    def test_companies_correct_credentials(self,name,email,valueno,
+            value,companyltn,companyproduct,follow):
         tester=customer_data.test_client(self)
         login=Login_route_test()
-        login.test_login_correct_credentials(email,'password',False)
+        login.test_login_correct_credentials(email,'password',True)
         return tester.post('/business/companyreg/',
-            data=dict(companyname=companyname,
-            companydomain=companydomain,
-            companycode=companycode,
-            companyno=companyno,
+            data=dict(companyname=name,
+            companydomain=email,
+            companycode=valueno,
+            companyno=value,
             companyltn=companyltn,
             companyproduct=companyproduct),
             follow_redirects=follow
             )
     def test_incomplete(self):
-        response=self.test_companies_correct_credentials('','','','','','',False)
+        response=self.test_companies_correct_credentials('','','','','','',True)
         self.assertIn(b"This field is required",response.data)
     def test_double_companies(self):
         self.test_success()
@@ -196,12 +194,14 @@ class Company_registration(unittest.TestCase):
             value,value,value,'kuku',False)
         self.assertIn(b"user name or email is already taken. choose another name.",response.data)
     def test_invalid_domain(self):
-        response=self.test_companies_correct_credentials('','heywt','','','','',False)
+        response=self.test_companies_correct_credentials('','heywt','','','','',True)
         self.assertIn(b"Invalid email address",response.data)    
+    
+    
     def test_success(self):
         
         response=self.test_companies_correct_credentials(name,email,value,
-            value,value,'kuku',True)
+            value,'Ruiru','kuku',True)
         self.assertEqual(response.status_code,302)
         return value
 
